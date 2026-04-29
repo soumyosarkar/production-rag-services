@@ -13,8 +13,8 @@ class Settings(BaseSettings):
     COLLECTION_NAME: str = "production_rag"
     VECTOR_SIZE: int = 384
 
-    # LLM
-    OPENAI_API_KEY: str
+    # LLM - Gemini
+    GEMINI_API_KEY: str
 
     # App
     PROJECT_NAME: str = "soumyo-production-rag-service"
