@@ -3,6 +3,6 @@ uvicorn[standard]
 pydantic-settings
 qdrant-client
 sentence-transformers
-openai
+google-generativeai
 python-dotenv
 langchain-text-splitters
