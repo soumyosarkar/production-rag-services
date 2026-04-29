@@ -6,7 +6,7 @@ from ....core.config import settings
 
 router = APIRouter()
 
-genai.configure(api_key=settings.GEMINI_API_KEY)  # we'll update config next
+genai.configure(api_key=settings.GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 @router.post("/query", response_model=QueryResponse)
