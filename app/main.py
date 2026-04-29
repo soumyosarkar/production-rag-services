@@ -2,14 +2,14 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from .core.config import settings
 from .core.database import get_qdrant_client
+from .api.v1.endpoints.ingestion import router as ingestion_router
+from .api.v1.endpoints.query import router as query_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
     print(f"🚀 Starting {settings.PROJECT_NAME}")
-    get_qdrant_client()  # init Qdrant + collection
+    get_qdrant_client()
     yield
-    # Shutdown
     print("🛑 Shutting down...")
 
 app = FastAPI(
@@ -17,10 +17,10 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Include routers
+app.include_router(ingestion_router, prefix="/api/v1", tags=["ingestion"])
+app.include_router(query_router, prefix="/api/v1", tags=["query"])
+
 @app.get("/")
 async def root():
-    return {"message": "soumyo-production-rag-service is running 🔥"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    return {"message": "soumyo-production-rag-service is running 🔥", "docs": "/docs"}
